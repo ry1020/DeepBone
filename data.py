@@ -1,48 +1,57 @@
-from os.path import exists, join, basename
-from torchvision.transforms import Compose, CenterCrop, ToTensor, Resize
+from os.path import join
+
+from monai.transforms import AddChannel, ScaleIntensity, RandRotate90, EnsureType, Compose, Resize
 
 from dataset import DatasetFromFolder
+# from torchvision.transforms import Compose, CenterCrop, ToTensor, Resize
 
 
-def get_roi_dir(dest="../DeepBone"):
+def get_roi_dir(dest="../DeepBone/data"):
     output_roi_dir = join(dest, "rois")
     return output_roi_dir
 
 
-def calculate_valid_crop_size(crop_size, upscale_factor):
-    return crop_size - (crop_size % upscale_factor)
+def get_strength_file(dest="../DeepBone/data"):
+    output_strength_file = join(dest, "roi_vm_mean.csv")
+    return output_strength_file
 
 
-def input_transform(crop_size, upscale_factor):
+# Define transforms
+def train_transforms():
     return Compose([
-        CenterCrop(crop_size),
-        Resize(crop_size // upscale_factor),
-        ToTensor(),
-    ])
+        ScaleIntensity(),
+        AddChannel(),
+        Resize((256, 256, 256)),
+        RandRotate90(),
+        EnsureType()])
 
 
-# def target_transform(crop_size):
-#     return Compose([
-#         CenterCrop(crop_size),
-#         ToTensor(),
-#     ])
+def test_transforms():
+    return Compose([
+        ScaleIntensity(),
+        AddChannel(),
+        Resize((256, 256, 256)),
+        EnsureType()])
 
 
-def get_training_set(upscale_factor):
-    root_dir = get_roi_dir()
-    train_dir = join(root_dir, "train")
-    crop_size = calculate_valid_crop_size(256, upscale_factor)
+def get_training_set():
+    roi_dir = get_roi_dir()
+    train_dir = join(roi_dir, "train")
+    strength_file = get_strength_file()
 
     return DatasetFromFolder(train_dir,
-                             input_transform=input_transform(crop_size, upscale_factor),
+                             strength_file,
+                             train_transforms(),
                              target_transform=None)
 
 
-def get_test_set(upscale_factor):
-    root_dir = get_roi_dir()
-    test_dir = join(root_dir, "test")
-    crop_size = calculate_valid_crop_size(256, upscale_factor)
+def get_test_set():
+    roi_dir = get_roi_dir()
+    test_dir = join(roi_dir, "test")
+    strength_file = get_strength_file()
 
     return DatasetFromFolder(test_dir,
-                             input_transform=input_transform(crop_size, upscale_factor),
+                             strength_file,
+                             test_transforms(),
                              target_transform=None)
+

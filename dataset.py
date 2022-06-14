@@ -1,43 +1,30 @@
+import os
 import torch.utils.data as data
-
-from os import listdir
-from os.path import join
-from PIL import Image
-import numpy as np
 import nrrd
-
-import torch
-import torchvision
-import torchvision.transforms as transforms
-
-VOX_SIZE = (0.05, 0.05, 0.05)  # mm
-BONE_HU = 1800
-
-def is_image_file(filename):
-    return any(filename.endswith(extension) for extension in [".nrrd"])
-
-
-def load_img(filepath):
-    img = Image.open(filepath).convert('YCbCr')
-    y, _, _ = img.split()
-    return y
+import pandas as pd
 
 
 class DatasetFromFolder(data.Dataset):
-    def __init__(self, roi_dir):
-        super(DatasetFromFolder, self).__init__()
-        self.roi_filenames = [join(roi_dir, x) for x in listdir(roi_dir) if is_image_file(x)]
-        self.strength_filename =
-    def __getitem__(self, index):
-        roi, header = nrrd.read(self.roi_filenames[index])
-        roi = torch.tensor(roi)
-        roi = (roi - torch.min(roi)) / (torch.max(roi) - torch.min(roi))
-        roi = roi * BONE_HU
+    def __init__(self, roi_dir, strength_file, input_transform=None, target_transform=None):
+        self.img_strengths = pd.read_csv(strength_file)
+        self.roi_dir = roi_dir
 
-        roi_vm_mean = np.load(self.strength_filename)  # This is mean stress.
-        target = roi_vm_mean[index]
-
-        return roi, target
+        self.input_transform = input_transform
+        self.target_transform = target_transform
 
     def __len__(self):
-        return len(self.image_filenames)
+        return len(self.img_strengths)
+
+    def __getitem__(self, idx):
+        roi_path = os.path.join(self.roi_dir, self.img_strengths.iloc[idx, 0])
+        roi, header = nrrd.read(roi_path)
+        if self.input_transform:
+            roi = self.input_transform(roi)
+
+        strength = self.img_strengths.iloc[idx, 1]
+
+        if self.target_transform:
+            strength = self.target_transform(strength)
+
+        return roi, strength
+
