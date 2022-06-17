@@ -3,10 +3,11 @@ import pandas as pd
 import numpy as np
 from os import listdir
 
-from data import get_training_set, get_validating_set
+from data import get_training_set, get_test_set
 from torch.utils.data import DataLoader
 import SimpleITK as sitk
 import nibabel as nib
+
 
 from monai.data import DataLoader, Dataset
 from monai.visualize import matshow3d
@@ -18,11 +19,11 @@ def is_nrrd_file(filename):
 
 
 def convert_npy_to_csv():
-    strength_file = '../DeepBone/data/roi_vm_mean.npy'
+    strength_file = '../data/roi_vm_mean.npy'
     strengths = np.load(strength_file)
     print(strengths.size)
 
-    roi_dir = '../DeepBone/data/rois/all'
+    roi_dir = '../data/rois/all'
     roi_filenames = [x for x in listdir(roi_dir) if is_nrrd_file(x)]
     print(len(roi_filenames))
 
@@ -31,7 +32,7 @@ def convert_npy_to_csv():
 
 
 def convert_nrrd_to_nii():
-    roi_dir_nrrd = '../DeepBone/data/rois/all'
+    roi_dir_nrrd = '../data/rois/all'
     roi_dir_nii = '../DeepBone/data/rois/all_nii'
     for roi_filename in listdir(roi_dir_nrrd):
         if is_nrrd_file(roi_filename):
@@ -41,9 +42,9 @@ def convert_nrrd_to_nii():
 
 def test_dataloader():
     train_set = get_training_set()
-    val_set = get_validating_set()
+    test_set = get_test_set()
     training_data_loader = DataLoader(dataset=train_set, num_workers=2, batch_size=2, shuffle=False)
-    val_data_loader = DataLoader(dataset=val_set, num_workers=2, batch_size=2, shuffle=False)
+    testing_data_loader = DataLoader(dataset=test_set, num_workers=2, batch_size=2, shuffle=False)
     im, label = train_set[0]
     print(type(im), im.shape, label)
     matshow3d(
@@ -77,4 +78,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

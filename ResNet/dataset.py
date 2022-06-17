@@ -1,6 +1,4 @@
 import os
-
-import numpy as np
 import torch.utils.data as data
 import nrrd
 import pandas as pd
@@ -26,8 +24,6 @@ class DatasetFromFolder(data.Dataset):
             roi = self.input_transform(roi)
 
         strength = self.img_strengths.iloc[idx, 1]
-
-        strength = np.float32(strength)
 
         if self.target_transform:
             strength = self.target_transform(strength)

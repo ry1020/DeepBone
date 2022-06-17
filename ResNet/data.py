@@ -1,17 +1,17 @@
 import os
 
-import torch
 from monai.transforms import AddChannel, ScaleIntensity, RandRotate90, EnsureType, Compose, Resize
 
 from dataset import DatasetFromFolder
+# from torchvision.transforms import Compose, CenterCrop, ToTensor, Resize
 
 
-def get_roi_dir(dest=os.path.join("..", "DeepBone", "data")):
+def get_roi_dir(dest=os.path.join("../..", "DeepBone", "data")):
     output_roi_dir = os.path.join(dest, "rois")
     return output_roi_dir
 
 
-def get_strength_file(dest=os.path.join("..", "DeepBone", "data")):
+def get_strength_file(dest=os.path.join("../..", "DeepBone", "data")):
     output_strength_file = os.path.join(dest, "roi_vm_mean.csv")
     return output_strength_file
 
@@ -34,10 +34,6 @@ def test_transforms():
         EnsureType()])
 
 
-def target_transform():
-    return EnsureType()
-
-
 def get_training_set():
     roi_dir = get_roi_dir()
     train_roi_dir = os.path.join(roi_dir, "train")
@@ -46,7 +42,7 @@ def get_training_set():
     return DatasetFromFolder(train_roi_dir,
                              train_strength_file,
                              train_transforms(),
-                             target_transform())
+                             target_transform=None)
 
 
 def get_validating_set():
@@ -57,7 +53,7 @@ def get_validating_set():
     return DatasetFromFolder(valid_roi_dir,
                              valid_strength_file,
                              test_transforms(),
-                             target_transform())
+                             target_transform=None)
 
 
 def get_inference_set():
@@ -68,4 +64,5 @@ def get_inference_set():
     return DatasetFromFolder(inference_roi_dir,
                              inference_strength_file,
                              test_transforms(),
-                             target_transform())
+                             target_transform=None)
+
