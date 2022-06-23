@@ -6,12 +6,12 @@ from monai.transforms import AddChannel, ScaleIntensity, RandRotate90, EnsureTyp
 from dataset import DatasetFromFolder
 
 
-def get_roi_dir(dest=os.path.join("..", "DeepBone", "data")):
+def get_roi_dir(dest=os.path.join("..", "data")):
     output_roi_dir = os.path.join(dest, "rois")
     return output_roi_dir
 
 
-def get_strength_file(dest=os.path.join("..", "DeepBone", "data")):
+def get_strength_file(dest=os.path.join("..", "data")):
     output_strength_file = os.path.join(dest, "roi_vm_mean.csv")
     return output_strength_file
 

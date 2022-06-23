@@ -30,20 +30,18 @@ def train(epoch, training_data_loader, model, optimizer, criterion):
 
 
 def validate(val_data_loader, model, criterion):
-    avg_psnr = 0
+    avg_mse = 0
     with torch.no_grad():
         for batch in val_data_loader:
             input, target = batch[0].to(opt.device), batch[1].to(opt.device)
-
             prediction = model(input)
             mse = criterion(torch.squeeze(prediction), torch.squeeze(target))
-            psnr = 10 * log10(1 / mse.item())
-            avg_psnr += psnr
-    print("===> Avg. PSNR: {:.4f} dB".format(avg_psnr / len(val_data_loader)))
+            avg_mse += mse
+    print("===> Avg. MSE: {:.4f}".format(avg_mse / len(val_data_loader)))
 
 
 def checkpoint(epoch, model):
-    model_out_path = "../DeepBone/output/model_epoch_{}.pth".format(epoch)
+    model_out_path = "./output/model_epoch_{}.pth".format(epoch)
     torch.save(model, model_out_path)
     print("Checkpoint saved to {}".format(model_out_path))
 
@@ -76,6 +74,8 @@ def main_worker(opt):
 if __name__ == '__main__':
 
     opt = parse_opts()
+
+    print(torch.cuda.is_available())
 
     print(opt)
 

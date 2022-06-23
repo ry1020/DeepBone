@@ -173,7 +173,7 @@ def main_worker(opt):
             opt.inference_subset)
 
         inference.inference(inference_loader, model, inference_result_path,
-                            inference_class_names, opt.inference_no_average,
+                            inference_class_names,
                             opt.output_topk)
 
 

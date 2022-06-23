@@ -33,6 +33,7 @@ class Net(nn.Module):
         self._initialize_weights()
 
     def forward(self, x):
+        # print("got input size {}".format(x.size()))
         x = self.act(self.conv1(x))  # [batch_size, 32, 256, 256, 256]
         x = self.norm1(self.max_pool(x))  # [batch_size, 32, 128, 128, 128]
         x = self.act(self.conv2(x))  # [batch_size, 64, 128, 128, 128]
@@ -44,6 +45,7 @@ class Net(nn.Module):
         x = self.avg_pool(x)  # [batch_size, 256, 8, 8, 8]
         x = self.flat(x) # [batch_size, 256*8*8*8=131072]
         x = self.act(self.linear(x))  # [batch_size, 256]
+        # print("got input size {}".format(x.size()))
         x = self.norm5(x)
         x = self.drop(x)
         x = self.out(x)  # [batch_size, 1]

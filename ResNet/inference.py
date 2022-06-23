@@ -8,37 +8,17 @@ import torch.nn.functional as F
 from utils import AverageMeter
 
 
-def get_video_results(outputs, class_names, output_topk):
-    sorted_scores, locs = torch.topk(outputs,
-                                     k=min(output_topk, len(class_names)))
-
-    video_results = []
-    for i in range(sorted_scores.size(0)):
-        video_results.append({
-            'label': class_names[locs[i].item()],
-            'score': sorted_scores[i].item()
-        })
-
-    return video_results
-
-
-def inference(data_loader, model, result_path, class_names, no_average,
+def inference(data_loader, model, result_path, class_names,
               output_topk):
     print('inference')
 
     model.eval()
 
-    batch_time = AverageMeter()
-    data_time = AverageMeter()
     results = {'results': defaultdict(list)}
-
-    end_time = time.time()
 
     with torch.no_grad():
         for i, (inputs, targets) in enumerate(data_loader):
-            data_time.update(time.time() - end_time)
 
-            video_ids, segments = zip(*targets)
             outputs = model(inputs)
 
             for j in range(outputs.size(0)):
@@ -47,16 +27,9 @@ def inference(data_loader, model, result_path, class_names, no_average,
                     'output': outputs[j]
                 })
 
-            batch_time.update(time.time() - end_time)
-            end_time = time.time()
-
-            print('[{}/{}]\t'
-                  'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
-                  'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'.format(
+            print('[{}/{}]\t'.format(
                       i + 1,
-                      len(data_loader),
-                      batch_time=batch_time,
-                      data_time=data_time))
+                      len(data_loader)))
 
     inference_results = {'results': {}}
     if not no_average:
