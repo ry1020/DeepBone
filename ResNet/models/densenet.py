@@ -80,7 +80,7 @@ class DenseNet(nn.Module):
     """
 
     def __init__(self,
-                 n_input_channels=3,
+                 n_input_channels=1,
                  conv1_t_size=7,
                  conv1_t_stride=1,
                  no_max_pool=False,
@@ -88,8 +88,7 @@ class DenseNet(nn.Module):
                  block_config=(6, 12, 24, 16),
                  num_init_features=64,
                  bn_size=4,
-                 drop_rate=0,
-                 num_classes=1000):
+                 drop_rate=0):
 
         super().__init__()
 
@@ -135,7 +134,7 @@ class DenseNet(nn.Module):
                 m.bias.data.zero_()
 
         # Linear layer
-        self.classifier = nn.Linear(num_features, num_classes)
+        self.fc = nn.Linear(num_features, 1)
 
         for m in self.modules():
             if isinstance(m, nn.Conv3d):
@@ -154,7 +153,7 @@ class DenseNet(nn.Module):
         out = F.adaptive_avg_pool3d(out,
                                     output_size=(1, 1,
                                                  1)).view(features.size(0), -1)
-        out = self.classifier(out)
+        out = self.fc(out)
         return out
 
 

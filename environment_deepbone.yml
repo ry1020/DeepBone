@@ -42,3 +42,4 @@ dependencies:
   - skorch # A scikit-learn compatible neural network library that wraps PyTorch.
   # - python-utils # Remove this package!!!
   - tensorboard # may not need
+  - torch-tb-profiler # may not need

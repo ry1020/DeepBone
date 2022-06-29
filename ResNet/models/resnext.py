@@ -40,19 +40,18 @@ class ResNeXt(ResNet):
                  block,
                  layers,
                  block_inplanes,
-                 n_input_channels=3,
+                 n_input_channels=1,
                  conv1_t_size=7,
                  conv1_t_stride=1,
                  no_max_pool=False,
                  shortcut_type='B',
-                 cardinality=32,
-                 n_classes=400):
+                 cardinality=32):
         block = partialclass(block, cardinality=cardinality)
         super().__init__(block, layers, block_inplanes, n_input_channels,
                          conv1_t_size, conv1_t_stride, no_max_pool,
-                         shortcut_type, n_classes)
+                         shortcut_type)
 
-        self.fc = nn.Linear(cardinality * 32 * block.expansion, n_classes)
+        self.fc = nn.Linear(cardinality * 32 * block.expansion, 1)
 
 
 def generate_model(model_depth, **kwargs):

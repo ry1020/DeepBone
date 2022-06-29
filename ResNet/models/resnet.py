@@ -105,14 +105,12 @@ class ResNet(nn.Module):
                  block,
                  layers,
                  block_inplanes,
-                 n_classes=400,
-                 n_input_channels=3,
-                 shortcut_type='B',
+                 n_input_channels=1,
                  conv1_t_size=7,
                  conv1_t_stride=1,
                  no_max_pool=False,
-                 widen_factor=1.0,
-                 ):
+                 shortcut_type='B',
+                 widen_factor=1.0):
         super().__init__()
 
         block_inplanes = [int(x * widen_factor) for x in block_inplanes]
@@ -148,7 +146,7 @@ class ResNet(nn.Module):
                                        stride=2)
 
         self.avgpool = nn.AdaptiveAvgPool3d((1, 1, 1))
-        self.fc = nn.Linear(block_inplanes[3] * block.expansion, n_classes)  # TODO: check if needs to be modified
+        self.fc = nn.Linear(block_inplanes[3] * block.expansion, 1)  # TODO: check if needs to be modified
 
         for m in self.modules():
             if isinstance(m, nn.Conv3d):

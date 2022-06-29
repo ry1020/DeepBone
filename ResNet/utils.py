@@ -48,28 +48,6 @@ class Logger(object):
         self.log_file.flush()
 
 
-def calculate_accuracy(outputs, targets):
-    with torch.no_grad():
-        batch_size = targets.size(0)
-
-        _, pred = outputs.topk(1, 1, largest=True, sorted=True)
-        pred = pred.t()
-        correct = pred.eq(targets.view(1, -1))
-        n_correct_elems = correct.float().sum().item()
-
-        return n_correct_elems / batch_size
-
-
-def calculate_precision_and_recall(outputs, targets, pos_label=1):
-    with torch.no_grad():
-        _, pred = outputs.topk(1, 1, largest=True, sorted=True)
-        precision, recall, _, _ = precision_recall_fscore_support(
-            targets.view(-1, 1).cpu().numpy(),
-            pred.cpu().numpy())
-
-        return precision[pos_label], recall[pos_label]
-
-
 def worker_init_fn(worker_id):
     torch_seed = torch.initial_seed()
 

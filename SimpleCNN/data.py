@@ -51,8 +51,8 @@ def get_training_set():
 
 def get_validating_set():
     roi_dir = get_roi_dir()
-    valid_roi_dir = os.path.join(roi_dir, "valid")
-    valid_strength_file = get_strength_file().replace(".csv", "_valid.csv")
+    valid_roi_dir = os.path.join(roi_dir, "val")
+    valid_strength_file = get_strength_file().replace(".csv", "_val.csv")
 
     return DatasetFromFolder(valid_roi_dir,
                              valid_strength_file,
@@ -62,8 +62,8 @@ def get_validating_set():
 
 def get_inference_set():
     roi_dir = get_roi_dir()
-    inference_roi_dir = os.path.join(roi_dir, "inference")
-    inference_strength_file = get_strength_file().replace(".csv", "_inference.csv")
+    inference_roi_dir = os.path.join(roi_dir, "test")
+    inference_strength_file = get_strength_file().replace(".csv", "_test.csv")
 
     return DatasetFromFolder(inference_roi_dir,
                              inference_strength_file,

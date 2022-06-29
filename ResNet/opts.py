@@ -1,4 +1,4 @@
-import argparse
+import argparse 
 from pathlib import Path
 
 
@@ -6,17 +6,13 @@ from pathlib import Path
 def parse_opts():
     parser = argparse.ArgumentParser(description='Bone Strength Project')
     parser.add_argument('--result_path',
-                        default=None,
+                        default='./output',
                         type=Path,
                         help='Result directory path')
     parser.add_argument('--batch_size',
                         default=128,
                         type=int,
                         help='Batch Size')
-    parser.add_argument('--n_val_samples',
-                        default=3,
-                        type=int,
-                        help='Number of validation samples for each activity')
     parser.add_argument('--inference_batch_size',
                         default=0,
                         type=int,
@@ -129,14 +125,6 @@ def parse_opts():
                         action='store_true',
                         help='Use multi-processing distributed training to launch '
                              'N processes per node, which has N GPUs.')
-    # parser.add_argument('--dist_url',
-    #                     default='tcp://127.0.0.1:23456',
-    #                     type=str,
-    #                     help='url used to set up distributed training')
-    parser.add_argument('--world_size',
-                        default=-1,
-                        type=int,
-                        help='number of nodes for distributed training')
     parser.add_argument('--tensorboard',
                         action='store_true',
                         help='If true, output tensorboard log file.')

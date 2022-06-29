@@ -1,4 +1,5 @@
 from __future__ import print_function
+import os
 from pathlib import Path
 import json
 import random
@@ -11,10 +12,10 @@ from torch.utils.data import DataLoader
 
 from DeepBone.ResNet import inference
 from DeepBone.ResNet.training import train_epoch
-from DeepBone.ResNet.utils import worker_init_fn, get_lr
+from DeepBone.ResNet.utils import Logger, worker_init_fn, get_lr
 from DeepBone.ResNet.validation import val_epoch
 from model import generate_model, make_data_parallel
-from data import get_training_set, get_inference_set, get_validating_set
+from data import get_training_data, get_inference_data, get_validation_data
 from opts import parse_opts
 
 
@@ -37,15 +38,13 @@ def get_opt():
 
 
 def get_train_utils(opt, model_parameters):
-    train_data = get_training_set()
+    train_data = get_training_data()
 
-    train_sampler = None
     train_loader = DataLoader(dataset=train_data,
                               num_workers=opt.n_threads,
                               batch_size=opt.batch_size,
-                              shuffle=(train_sampler is None),
+                              shuffle=True,
                               pin_memory=True,
-                              sampler=train_sampler,
                               worker_init_fn=worker_init_fn)
 
     if opt.nesterov:
@@ -68,31 +67,39 @@ def get_train_utils(opt, model_parameters):
         scheduler = lr_scheduler.MultiStepLR(optimizer,
                                              opt.multistep_milestones)
 
-    train_logger = None
-    train_batch_logger = None
+    if opt.is_master_node:
+        train_logger = Logger(opt.result_path / 'train.log',
+                              ['epoch', 'loss', 'lr'])
+        train_batch_logger = Logger(
+            opt.result_path / 'train_batch.log',
+            ['epoch', 'batch', 'iter', 'loss', 'lr'])
+    else:
+        train_logger = None
+        train_batch_logger = None
 
-    return train_loader, train_sampler, train_logger, train_batch_logger, optimizer, scheduler
+    return train_loader, train_logger, train_batch_logger, optimizer, scheduler
 
 
 def get_val_utils(opt):
-    valid_data = get_validating_set()
+    valid_data = get_validation_data()
 
-    val_sampler = None
     val_loader = DataLoader(valid_data,
-                            batch_size=(opt.batch_size //
-                                        opt.n_val_samples),
+                            batch_size=(opt.batch_size),
                             shuffle=False,
                             num_workers=opt.n_threads,
                             pin_memory=True,
-                            sampler=val_sampler,
                             worker_init_fn=worker_init_fn)
-    val_logger = None
+    if opt.is_master_node:
+        val_logger = Logger(opt.result_path / 'val.log',
+                            ['epoch', 'loss'])
+    else:
+        val_logger = None
 
     return val_loader, val_logger
 
 
 def get_inference_utils(opt):
-    inference_data = get_inference_set()
+    inference_data = get_inference_data(opt.inference_subset)
 
     inference_loader = DataLoader(inference_data,
                                   batch_size=opt.inference_batch_size,
@@ -101,7 +108,7 @@ def get_inference_utils(opt):
                                   pin_memory=True,
                                   worker_init_fn=worker_init_fn)
 
-    return inference_loader, inference_data.strength
+    return inference_loader
 
 
 def save_checkpoint(save_file_path, epoch, arch, model, optimizer, scheduler):
@@ -136,12 +143,20 @@ def main_worker(opt):
     criterion = MSELoss().to(opt.device)
 
     if not opt.no_train:
-        (train_loader, train_sampler, train_logger, train_batch_logger,
+        (train_loader, train_logger, train_batch_logger,
          optimizer, scheduler) = get_train_utils(opt, parameters)
     if not opt.no_val:
         val_loader, val_logger = get_val_utils(opt)
 
-    tb_writer = None
+    if opt.tensorboard and opt.is_master_node:
+        from torch.utils.tensorboard import SummaryWriter
+        if opt.begin_epoch == 1:
+            tb_writer = SummaryWriter(log_dir=opt.result_path)
+        else:
+            tb_writer = SummaryWriter(log_dir=opt.result_path,
+                                      purge_step=opt.begin_epoch)
+    else:
+        tb_writer = None
 
     prev_val_loss = None
 
@@ -168,13 +183,11 @@ def main_worker(opt):
             scheduler.step(prev_val_loss)
 
     if opt.inference:
-        inference_loader, inference_strength = get_inference_utils(opt)
-        inference_result_path = opt.result_path / '{}.json'.format(
-            opt.inference_subset)
+        inference_loader = get_inference_utils(opt)
 
-        inference.inference(inference_loader, model, inference_result_path,
-                            inference_class_names,
-                            opt.output_topk)
+        inference_result_path = os.path.join(opt.result_path, 'inference.csv')
+
+        inference.inference(inference_loader, model, inference_result_path)
 
 
 if __name__ == '__main__':
