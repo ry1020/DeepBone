@@ -5,13 +5,13 @@ from monai.transforms import AddChannel, ScaleIntensity, RandRotate90, EnsureTyp
 from dataset import DatasetFromFolder
 
 
-def get_roi_dir(dest=os.path.join("..", "data")):
-    output_roi_dir = os.path.join(dest, "rois")
+def get_roi_dir(data_path):
+    output_roi_dir = os.path.join(data_path, "rois")
     return output_roi_dir
 
 
-def get_strength_file(dest=os.path.join("..", "data")):
-    output_strength_file = os.path.join(dest, "roi_vm_mean.csv")
+def get_strength_file(data_path):
+    output_strength_file = os.path.join(data_path, "roi_vm_mean.csv")
     return output_strength_file
 
 
@@ -37,10 +37,10 @@ def target_transform():
     return EnsureType()
 
 
-def get_training_data():
-    roi_dir = get_roi_dir()
+def get_training_data(data_path):
+    roi_dir = get_roi_dir(data_path)
     train_roi_dir = os.path.join(roi_dir, "train")
-    train_strength_file = get_strength_file().replace(".csv", "_train.csv")
+    train_strength_file = get_strength_file(data_path).replace(".csv", "_train.csv")
 
     return DatasetFromFolder(train_roi_dir,
                              train_strength_file,
@@ -48,10 +48,10 @@ def get_training_data():
                              target_transform())
 
 
-def get_validation_data():
-    roi_dir = get_roi_dir()
+def get_validation_data(data_path):
+    roi_dir = get_roi_dir(data_path)
     valid_roi_dir = os.path.join(roi_dir, "val")
-    valid_strength_file = get_strength_file().replace(".csv", "_val.csv")
+    valid_strength_file = get_strength_file(data_path).replace(".csv", "_val.csv")
 
     return DatasetFromFolder(valid_roi_dir,
                              valid_strength_file,
@@ -59,11 +59,11 @@ def get_validation_data():
                              target_transform())
 
 
-def get_inference_data(inference_subset):
+def get_inference_data(data_path, inference_subset):
     assert inference_subset in ['train', 'val', 'test']
-    roi_dir = get_roi_dir()
+    roi_dir = get_roi_dir(data_path)
     inference_roi_dir = os.path.join(roi_dir, inference_subset)
-    inference_strength_file = get_strength_file().replace(".csv", ['_',inference_subset,'.csv'])
+    inference_strength_file = get_strength_file(data_path).replace(".csv", ''.join(['_',inference_subset,'.csv']))
 
     return DatasetFromFolder(inference_roi_dir,
                              inference_strength_file,

@@ -5,12 +5,16 @@ from pathlib import Path
 # Training settings
 def parse_opts():
     parser = argparse.ArgumentParser(description='Bone Strength Project')
+    parser.add_argument('--data_path',
+                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/data',
+                        type=Path,
+                        help='Data directory path')
     parser.add_argument('--result_path',
-                        default='./output',
+                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/ResNet/output',
                         type=Path,
                         help='Result directory path')
     parser.add_argument('--batch_size',
-                        default=128,
+                        default=5,
                         type=int,
                         help='Batch Size')
     parser.add_argument('--inference_batch_size',
@@ -18,11 +22,11 @@ def parse_opts():
                         type=int,
                         help='Batch Size for inference. 0 means this is the same as batch_size.')
     parser.add_argument('--n_epochs',
-                        default=200,
+                        default=20,
                         type=int,
                         help='Number of total epochs to run')
     parser.add_argument('--learning_rate',
-                        default=0.1,
+                        default=0.01,
                         type=float,
                         help=('Initial learning rate'
                               '(divided by 10 while training by lr scheduler)'))
@@ -46,13 +50,13 @@ def parse_opts():
                         type=str,
                         help='Currently only support SGD')
     parser.add_argument('--lr_scheduler',
-                        default='multistep',
+                        default='plateau',
                         type=str,
                         help='Type of LR scheduler (multistep | plateau)')
     parser.add_argument('--multistep_milestones',
                         default=[50, 100, 150],
                         type=int,
-                        args='+',
+                        nargs='+',
                         help='Milestones of LR scheduler. See documentation of MultistepLR.')
     parser.add_argument('--plateau_patience',
                         default=10,
@@ -87,11 +91,11 @@ def parse_opts():
                         type=int,
                         help='Manually set random seed')
     parser.add_argument('--model',
-                        default='resnet',
+                        default='densenet',
                         type=str,
-                        help='(resnet | resnet2p1d | preresnet | wideresnet | resnext | densenet | ')
+                        help='(resnet | resnet2p1d | wideresnet | resnext | preresnet | densenet')
     parser.add_argument('--model_depth',
-                        default=18,
+                        default=10,
                         type=int,
                         help='Depth of resnet (10 | 18 | 34 | 50 | 101)')
     parser.add_argument('--resnet_shortcut',
@@ -126,84 +130,9 @@ def parse_opts():
                         help='Use multi-processing distributed training to launch '
                              'N processes per node, which has N GPUs.')
     parser.add_argument('--tensorboard',
-                        action='store_true',
+                        action='store_false',
                         help='If true, output tensorboard log file.')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    parser.add_argument(
-        '--ft_begin_module',
-        default='',
-        type=str,
-        help=('Module name of beginning of fine-tuning'
-              '(conv1, layer1, fc, denseblock1, classifier, ...).'
-              'The default means all layers are fine-tuned.'))
-    parser.add_argument('--sample_size',
-                        default=112,
-                        type=int,
-                        help='Height and width of inputs')
-    parser.add_argument('--sample_duration',
-                        default=16,
-                        type=int,
-                        help='Temporal duration of inputs')
-    parser.add_argument(
-        '--sample_t_stride',
-        default=1,
-        type=int,
-        help='If larger than 1, input frames are subsampled with the stride.')
-    parser.add_argument(
-        '--batchnorm_sync',
-        action='store_true',
-        help='If true, SyncBatchNorm is used instead of BatchNorm.')
-    parser.add_argument('--resume_path',
-                        default=None,
-                        type=Path,
-                        help='Save data (.pth) of previous training')
-    parser.add_argument('--inference_stride',
-                        default=16,
-                        type=int,
-                        help='Stride of sliding window in inference.')
-    parser.add_argument('--dist_url',
-                        default='tcp://127.0.0.1:23456',
-                        type=str,
-                        help='url used to set up distributed training')
-
-
-
-
-
     args = parser.parse_args()
+
 
     return args

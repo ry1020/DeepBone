@@ -10,10 +10,10 @@ from torch.backends import cudnn
 from torch.nn import MSELoss
 from torch.utils.data import DataLoader
 
-from DeepBone.ResNet import inference
-from DeepBone.ResNet.training import train_epoch
-from DeepBone.ResNet.utils import Logger, worker_init_fn, get_lr
-from DeepBone.ResNet.validation import val_epoch
+import inference
+from training import train_epoch
+from utils import Logger, worker_init_fn, get_lr
+from validation import val_epoch
 from model import generate_model, make_data_parallel
 from data import get_training_data, get_inference_data, get_validation_data
 from opts import parse_opts
@@ -26,6 +26,10 @@ def json_serial(obj):
 
 def get_opt():
     opt = parse_opts()
+    
+    if opt.inference_batch_size == 0:
+        opt.inference_batch_size = opt.batch_size
+
     opt.arch = '{}-{}'.format(opt.model, opt.model_depth)
     opt.begin_epoch = 1
     opt.n_input_channels = 1
@@ -38,7 +42,7 @@ def get_opt():
 
 
 def get_train_utils(opt, model_parameters):
-    train_data = get_training_data()
+    train_data = get_training_data(opt.data_path)
 
     train_loader = DataLoader(dataset=train_data,
                               num_workers=opt.n_threads,
@@ -81,7 +85,7 @@ def get_train_utils(opt, model_parameters):
 
 
 def get_val_utils(opt):
-    valid_data = get_validation_data()
+    valid_data = get_validation_data(opt.data_path)
 
     val_loader = DataLoader(valid_data,
                             batch_size=(opt.batch_size),
@@ -99,7 +103,7 @@ def get_val_utils(opt):
 
 
 def get_inference_utils(opt):
-    inference_data = get_inference_data(opt.inference_subset)
+    inference_data = get_inference_data(opt.data_path, opt.inference_subset)
 
     inference_loader = DataLoader(inference_data,
                                   batch_size=opt.inference_batch_size,

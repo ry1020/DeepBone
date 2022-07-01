@@ -8,11 +8,11 @@ from .resnet import conv3x3x3, conv1x1x1, get_inplanes, ResNet
 class PreActivationBasicBlock(nn.Module):
     expansion = 1
 
-    def __init__(self, inplanes, planes, stride=1, downsample=None):
+    def __init__(self, in_planes, planes, stride=1, downsample=None):
         super().__init__()
 
-        self.bn1 = nn.BatchNorm3d(inplanes)
-        self.conv1 = conv3x3x3(inplanes, planes, stride)
+        self.bn1 = nn.BatchNorm3d(in_planes)
+        self.conv1 = conv3x3x3(in_planes, planes, stride)
         self.bn2 = nn.BatchNorm3d(planes)
         self.conv2 = conv3x3x3(planes, planes)
         self.relu = nn.ReLU(inplace=True)
@@ -41,11 +41,11 @@ class PreActivationBasicBlock(nn.Module):
 class PreActivationBottleneck(nn.Module):
     expansion = 4
 
-    def __init__(self, inplanes, planes, stride=1, downsample=None):
+    def __init__(self, in_planes, planes, stride=1, downsample=None):
         super().__init__()
 
-        self.bn1 = nn.BatchNorm3d(inplanes)
-        self.conv1 = conv1x1x1(inplanes, planes)
+        self.bn1 = nn.BatchNorm3d(in_planes)
+        self.conv1 = conv1x1x1(in_planes, planes)
         self.bn2 = nn.BatchNorm3d(planes)
         self.conv2 = conv3x3x3(planes, planes, stride)
         self.bn3 = nn.BatchNorm3d(planes)

@@ -34,7 +34,7 @@ def train_epoch(epoch,
 
         targets = targets.to(device, non_blocking=True)
         outputs = model(inputs)
-        loss = criterion(outputs, targets)
+        loss = criterion(torch.squeeze(outputs), torch.squeeze(targets))
 
         losses.update(loss.item(), inputs.size(0))
 
