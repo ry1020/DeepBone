@@ -8,7 +8,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from model import Net
-from data import get_training_set, get_inference_set, get_validating_set
+from data import get_training_data, get_inference_data, get_validation_data
 from opts import parse_opts
 
 
@@ -52,8 +52,8 @@ def main_worker(opt):
     opt.device = torch.device("cuda" if opt.cuda else "cpu")
 
     print('===> Loading datasets')
-    train_set = get_training_set()
-    val_set = get_validating_set()
+    train_set = get_training_data(opt.data_path)
+    val_set = get_validation_data(opt.data_path)
     training_data_loader = DataLoader(dataset=train_set, num_workers=opt.threads, batch_size=opt.batchSize,
                                       shuffle=True)
     val_data_loader = DataLoader(dataset=val_set, num_workers=opt.threads, batch_size=opt.testBatchSize,

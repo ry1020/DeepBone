@@ -5,9 +5,10 @@ from pathlib import Path
 # Training settings
 def parse_opts():
     parser = argparse.ArgumentParser(description='Bone Strength Project')
+    parser.add_argument('--data_path', default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/data', type=Path, help='Data directory path')
     parser.add_argument('--batchSize', type=int, default=2, help='training batch size')
-    parser.add_argument('--testBatchSize', type=int, default=2, help='testing batch size')
-    parser.add_argument('--nEpochs', type=int, default=5, help='number of epochs to train for')
+    parser.add_argument('--testBatchSize', type=int, default=5, help='testing batch size')
+    parser.add_argument('--nEpochs', type=int, default=20, help='number of epochs to train for')
     parser.add_argument('--lr', type=float, default=0.01, help='Learning Rate. Default=0.01')
     parser.add_argument('--cuda', action='store_false', help='use cuda?')
     parser.add_argument('--threads', type=int, default=4, help='number of threads for data loader to use')

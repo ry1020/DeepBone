@@ -33,4 +33,3 @@ class DatasetFromFolder(data.Dataset):
 
         return roi, strength
 
-

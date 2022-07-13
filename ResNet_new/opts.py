@@ -1,6 +1,8 @@
 import argparse 
 from pathlib import Path
 
+from traitlets import default
+
 
 # Training settings
 def parse_opts():
@@ -10,19 +12,37 @@ def parse_opts():
                         type=Path,
                         help='Data directory path')
     parser.add_argument('--result_path',
-                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/ResNet/output',
+                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/ResNet_new/output',
                         type=Path,
                         help='Result directory path')
+    parser.add_argument('--resume_path',
+                        #default=None,
+                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/ResNet_new/output/save_20.pth',
+                        type=Path,
+                        help='Save data (.pth) of previous training')
+    parser.add_argument('--no_train',
+                        action='store_false',
+                        help='If true, training is not performed.')
+    parser.add_argument('--no_val',
+                        action='store_false',
+                        help='If true, validation is not performed.')
+    parser.add_argument('--inference',
+                        action='store_false',
+                        help='If true, inference is performed.')
+    parser.add_argument('--inference_subset',
+                        default='train',
+                        type=str,
+                        help='Used subset in inference (train | val | test)')
     parser.add_argument('--batch_size',
-                        default=5,
+                        default=1,
                         type=int,
                         help='Batch Size')
     parser.add_argument('--inference_batch_size',
-                        default=2,
+                        default=1,
                         type=int,
                         help='Batch Size for inference. 0 means this is the same as batch_size.')
     parser.add_argument('--n_epochs',
-                        default=20,
+                        default=21,
                         type=int,
                         help='Number of total epochs to run')
     parser.add_argument('--learning_rate',
@@ -58,6 +78,9 @@ def parse_opts():
                         type=int,
                         nargs='+',
                         help='Milestones of LR scheduler. See documentation of MultistepLR.')
+    parser.add_argument('--overwrite_milestones',
+                        action='store_true',
+                        help='If true, overwriting multistep_milestones when resuming training.')
     parser.add_argument('--plateau_patience',
                         default=10,
                         type=int,
@@ -66,19 +89,6 @@ def parse_opts():
                         default=10,
                         type=int,
                         help='Trained model is saved at every this epochs.')
-    parser.add_argument('--no_train',
-                        action='store_true',
-                        help='If true, training is not performed.')
-    parser.add_argument('--no_val',
-                        action='store_true',
-                        help='If true, validation is not performed.')
-    parser.add_argument('--inference',
-                        action='store_false',
-                        help='If true, inference is performed.')
-    parser.add_argument('--inference_subset',
-                        default='test',
-                        type=str,
-                        help='Used subset in inference (train | val | test)')
     parser.add_argument('--no_cuda',
                         action='store_true',
                         help='If true, cuda is not used.')
@@ -87,7 +97,7 @@ def parse_opts():
                         type=int,
                         help='Number of threads for multi-thread loading')
     parser.add_argument('--manual_seed',
-                        default=1,
+                        default=10,
                         type=int,
                         help='Manually set random seed')
     parser.add_argument('--model',
@@ -95,7 +105,7 @@ def parse_opts():
                         type=str,
                         help='(resnet | resnet2p1d | wideresnet | resnext | preresnet | densenet')
     parser.add_argument('--model_depth',
-                        default=10,
+                        default=18,
                         type=int,
                         help='Depth of resnet (10 | 18 | 34 | 50 | 101)')
     parser.add_argument('--resnet_shortcut',

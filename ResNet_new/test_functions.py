@@ -1,4 +1,6 @@
 # import necessary libraries
+from matplotlib import pyplot as plt
+import nrrd
 import pandas as pd
 import numpy as np
 from os import listdir
@@ -11,6 +13,7 @@ import nibabel as nib
 from monai.data import DataLoader, Dataset
 from monai.visualize import matshow3d
 import os
+
 
 
 def is_nrrd_file(filename):
@@ -31,8 +34,8 @@ def convert_npy_to_csv():
 
 
 def test_dataloader():
-    train_set = get_training_data()
-    test_set = get_validation_data()
+    train_set = get_training_data('/gpfs_projects/ran.yan/Project_Bone/DeepBone/data')
+    test_set = get_validation_data('/gpfs_projects/ran.yan/Project_Bone/DeepBone/data')
     training_data_loader = DataLoader(dataset=train_set, num_workers=2, batch_size=2, shuffle=False)
     testing_data_loader = DataLoader(dataset=test_set, num_workers=2, batch_size=2, shuffle=False)
     im, label = train_set[0]
@@ -46,8 +49,6 @@ def test_dataloader():
         show=True,
         cmap="gray",
     )
-    im, label = train_set[1]
-    print(type(im), im.shape, label)
     train_features, train_labels = next(iter(training_data_loader))
     print(f"Feature batch shape: {train_features.size()}")
     print(f"Labels batch shape: {train_labels.size()}")
