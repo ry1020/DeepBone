@@ -6,7 +6,7 @@ from dataset import DatasetFromFolder
 
 
 def get_roi_dir(data_path):
-    output_roi_dir = os.path.join(data_path, "Segmentations_Otsu")
+    output_roi_dir = os.path.join(data_path, "Segmentations_Otsu", "all")
     return output_roi_dir
 
 
@@ -18,18 +18,18 @@ def get_strength_file(data_path):
 # Define transforms
 def train_transforms():
     return Compose([
-        ScaleIntensity(),
         AddChannel(),
-        Resize((256, 256, 256)),
+        ScaleIntensity(),
+        #Resize((128,128,128)),
         RandRotate90(),
         EnsureType()])
 
 
 def test_transforms():
     return Compose([
-        ScaleIntensity(),
         AddChannel(),
-        Resize((256, 256, 256)),
+        ScaleIntensity(),
+        #Resize((128,128,128)),
         EnsureType()])
 
 
@@ -37,36 +37,48 @@ def target_transform():
     return EnsureType()
 
 
-def get_training_data(data_path):
+def get_training_data(data_path, no_sim, noise_scales, resolution_scales, voxel_size_simulated):
     roi_dir = get_roi_dir(data_path)
-    train_roi_dir = os.path.join(roi_dir, "train")
     train_strength_file = get_strength_file(data_path).replace(".csv", "_train.csv")
 
-    return DatasetFromFolder(train_roi_dir,
+    return DatasetFromFolder(roi_dir,
                              train_strength_file,
+                             no_sim,
+                             noise_scales,
+                             resolution_scales,
+                             voxel_size_simulated,
                              train_transforms(),
-                             target_transform())
+                             target_transform(),
+                             seed=None)
 
 
-def get_validation_data(data_path):
+def get_validation_data(data_path, no_sim, noise_scales, resolution_scales, voxel_size_simulated):
     roi_dir = get_roi_dir(data_path)
-    valid_roi_dir = os.path.join(roi_dir, "val")
     valid_strength_file = get_strength_file(data_path).replace(".csv", "_val.csv")
 
-    return DatasetFromFolder(valid_roi_dir,
+    return DatasetFromFolder(roi_dir,
                              valid_strength_file,
+                             no_sim,
+                             noise_scales,
+                             resolution_scales,
+                             voxel_size_simulated,
                              test_transforms(),
-                             target_transform())
+                             target_transform(),
+                             seed=None)
 
 
-def get_inference_data(data_path, inference_subset):
+def get_inference_data(data_path, no_sim, noise_scales, resolution_scales, voxel_size_simulated, seed, inference_subset):
     assert inference_subset in ['train', 'val', 'test']
     roi_dir = get_roi_dir(data_path)
-    inference_roi_dir = os.path.join(roi_dir, inference_subset)
     inference_strength_file = get_strength_file(data_path).replace(".csv", ''.join(['_',inference_subset,'.csv']))
 
-    return DatasetFromFolder(inference_roi_dir,
+    return DatasetFromFolder(roi_dir,
                              inference_strength_file,
+                             no_sim,
+                             noise_scales,
+                             resolution_scales,
+                             voxel_size_simulated,
                              test_transforms(),
-                             target_transform())
+                             target_transform(),
+                             seed)
                              

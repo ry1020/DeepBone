@@ -40,9 +40,33 @@ def get_opt():
 
     return opt
 
+def resume_model(resume_path, arch, model):
+    print('loading checkpoint {} model'.format(resume_path))
+    checkpoint = torch.load(resume_path, map_location='cpu')
+    assert arch == checkpoint['arch']
+
+    if hasattr(model, 'module'):
+        model.module.load_state_dict(checkpoint['state_dict'])
+    else:
+        model.load_state_dict(checkpoint['state_dict'])
+
+    return model
+
+def resume_train_utils(resume_path, optimizer, scheduler):
+    print('loading checkpoint {} train utils'.format(resume_path))
+    checkpoint = torch.load(resume_path, map_location='cpu')
+
+    begin_epoch = checkpoint['epoch'] + 1
+    if optimizer is not None and 'optimizer' in checkpoint:
+        optimizer.load_state_dict(checkpoint['optimizer'])
+    if scheduler is not None and 'scheduler' in checkpoint:
+        scheduler.load_state_dict(checkpoint['scheduler'])
+
+    return begin_epoch, optimizer, scheduler
 
 def get_train_utils(opt, model_parameters):
-    train_data = get_training_data(opt.data_path)
+    train_data = get_training_data(opt.data_path, opt.no_sim, opt.noise_scales, opt.resolution_scales, 
+                                    opt.voxel_size_simulated)
 
     train_loader = DataLoader(dataset=train_data,
                               num_workers=opt.n_threads,
@@ -85,7 +109,8 @@ def get_train_utils(opt, model_parameters):
 
 
 def get_val_utils(opt):
-    valid_data = get_validation_data(opt.data_path)
+    valid_data = get_validation_data(opt.data_path, opt.no_sim, opt.noise_scales, opt.resolution_scales, 
+                                        opt.voxel_size_simulated)
 
     val_loader = DataLoader(valid_data,
                             batch_size=(opt.batch_size),
@@ -103,7 +128,8 @@ def get_val_utils(opt):
 
 
 def get_inference_utils(opt):
-    inference_data = get_inference_data(opt.data_path, opt.inference_subset)
+    inference_data = get_inference_data(opt.data_path, opt.no_sim, opt.noise_scales, opt.resolution_scales,
+                                        opt.voxel_size_simulated, opt.manual_seed, opt.inference_subset)
 
     inference_loader = DataLoader(inference_data,
                                   batch_size=opt.inference_batch_size,
@@ -138,6 +164,9 @@ def main_worker(opt):
     opt.is_master_node = not opt.distributed or opt.dist_rank == 0
 
     model = generate_model(opt)
+    if opt.resume_path is not None:
+        model = resume_model(opt.resume_path, opt.arch, model)
+
     model = make_data_parallel(model, opt.distributed, opt.device)
     parameters = model.parameters()
 
@@ -149,6 +178,11 @@ def main_worker(opt):
     if not opt.no_train:
         (train_loader, train_logger, train_batch_logger,
          optimizer, scheduler) = get_train_utils(opt, parameters)
+        if opt.resume_path is not None:
+            opt.begin_epoch, optimizer, scheduler = resume_train_utils(
+                opt.resume_path, optimizer, scheduler)
+            if opt.overwrite_milestones:
+                scheduler.milestones = opt.multistep_milestones
     if not opt.no_val:
         val_loader, val_logger = get_val_utils(opt)
 
@@ -189,7 +223,7 @@ def main_worker(opt):
     if opt.inference:
         inference_loader = get_inference_utils(opt)
 
-        inference_result_path = os.path.join(opt.result_path, 'inference.csv')
+        inference_result_path = os.path.join(opt.result_path, '_'.join((opt.inference_subset, 'inference.csv')))
 
         inference.inference(inference_loader, model, inference_result_path)
 

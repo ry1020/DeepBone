@@ -12,16 +12,22 @@ def parse_opts():
                         type=Path,
                         help='Data directory path')
     parser.add_argument('--result_path',
-                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/ResNet_new/output',
+                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/simulation_CNN_radiomics/output/TEST_29',
                         type=Path,
                         help='Result directory path')
     parser.add_argument('--resume_path',
-                        #default=None,
-                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/ResNet_new/output/save_20.pth',
+                        # default=None,
+                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/simulation_CNN_radiomics/output/save_150.pth',
                         type=Path,
                         help='Save data (.pth) of previous training')
+    parser.add_argument('--is_DL',
+                        action='store_true',
+                        help='If true, deep learning  is performed.')
+    parser.add_argument('--is_RF',
+                        action='store_true',
+                        help='If true, random forest is performed.')
     parser.add_argument('--no_train',
-                        action='store_false',
+                        action='store_true',
                         help='If true, training is not performed.')
     parser.add_argument('--no_val',
                         action='store_false',
@@ -34,15 +40,30 @@ def parse_opts():
                         type=str,
                         help='Used subset in inference (train | val | test)')
     parser.add_argument('--batch_size',
-                        default=1,
+                        default=6,
                         type=int,
                         help='Batch Size')
     parser.add_argument('--inference_batch_size',
-                        default=1,
+                        default=50,
                         type=int,
                         help='Batch Size for inference. 0 means this is the same as batch_size.')
+    parser.add_argument('--no_sim',
+                        action='store_true',
+                        help='If true, image simulation is not performed.')
+    parser.add_argument('--noise_scales',
+                        default=1,
+                        type=float,
+                        help='Noise scaling.')
+    parser.add_argument('--resolution_scales',
+                        default=1,
+                        type=float,
+                        help='Resolution scaling.')
+    parser.add_argument('--voxel_size_simulated',
+                        default=(0.156,0.156,0.2),
+                        type=tuple,
+                        help='Voxel size of the simulated CT.')
     parser.add_argument('--n_epochs',
-                        default=21,
+                        default=150,
                         type=int,
                         help='Number of total epochs to run')
     parser.add_argument('--learning_rate',
@@ -70,7 +91,7 @@ def parse_opts():
                         type=str,
                         help='Currently only support SGD')
     parser.add_argument('--lr_scheduler',
-                        default='plateau',
+                        default='multistep',
                         type=str,
                         help='Type of LR scheduler (multistep | plateau)')
     parser.add_argument('--multistep_milestones',
@@ -90,14 +111,14 @@ def parse_opts():
                         type=int,
                         help='Trained model is saved at every this epochs.')
     parser.add_argument('--no_cuda',
-                        action='store_true',
+                        action='store_false',
                         help='If true, cuda is not used.')
     parser.add_argument('--n_threads',
                         default=4,
                         type=int,
                         help='Number of threads for multi-thread loading')
     parser.add_argument('--manual_seed',
-                        default=10,
+                        default=100,
                         type=int,
                         help='Manually set random seed')
     parser.add_argument('--model',
@@ -142,7 +163,15 @@ def parse_opts():
     parser.add_argument('--tensorboard',
                         action='store_false',
                         help='If true, output tensorboard log file.')
+    # parser.add_argument('--dist_url',
+    #                     default='tcp://127.0.0.1:23456',
+    #                     type=str,
+    #                     help='url used to set up distributed training')
+    # parser.add_argument('--world_size',
+    #                     default=-1,
+    #                     type=int,
+    #                     help='number of nodes for distributed training')
     args = parser.parse_args()
 
-
     return args
+    

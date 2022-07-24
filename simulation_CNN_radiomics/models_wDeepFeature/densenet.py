@@ -153,8 +153,9 @@ class DenseNet(nn.Module):
         out = F.adaptive_avg_pool3d(out,
                                     output_size=(1, 1,
                                                  1)).view(features.size(0), -1)
+        out_2 = out  #save last layer DL features
         out = self.fc(out)
-        return out
+        return out, out_2
 
 
 def generate_model(model_depth, **kwargs):

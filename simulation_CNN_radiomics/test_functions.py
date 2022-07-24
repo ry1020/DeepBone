@@ -63,8 +63,36 @@ def test_monai_example():
     img = nib.load(images[0])
 
 
+def check_img_nrrd():
+    roi, header = nrrd.read('/gpfs_projects/ran.yan/Project_Bone/DeepBone/data/Segmentations_Otsu/all/Segmentation-grayscale-9_53-1159.nrrd')
+    print(type(roi), roi.shape)
+    matshow3d(
+        volume=roi,
+        fig=None, title="input image",
+        # figsize=(100, 100),
+        every_n=10,
+        frame_dim=-1,
+        show=True,
+        cmap="gray",
+    )
+
+
+def summarize_MIL():
+    img_strengths = pd.read_csv('/gpfs_projects/ran.yan/Project_Bone/DeepBone/data/FEA_linear_partial_driver_L1.csv')
+    mil_dir = '/gpfs_projects/ran.yan/Project_Bone/DeepBone/data/Anisotropy_Measurements_L1'
+    for i in range(len(img_strengths)):
+        mil_filename = img_strengths.iloc[i, 1].replace("Segmentation-grayscale", "ROI")+"-table.csv"
+        mil = pd.read_csv(os.path.join(mil_dir, mil_filename))
+        mil = mil.rename(columns={"img.nrrd": img_strengths.iloc[i, 1]})
+        if i == 0:
+            mil_all = mil.drop(columns='Unnamed: 2').T
+        else:
+            mil_all = pd.concat([mil_all, mil.drop(columns=['rowname','Unnamed: 2']).T])
+    mil_all.to_csv('/gpfs_projects/ran.yan/Project_Bone/DeepBone/data/MIL_L1.csv')  # save the dataframe as a csv file
+
+
 def main():
-    test_dataloader()
+    summarize_MIL()
 
 
 if __name__ == "__main__":

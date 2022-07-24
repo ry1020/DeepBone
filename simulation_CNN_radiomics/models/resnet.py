@@ -146,7 +146,7 @@ class ResNet(nn.Module):
                                        stride=2)
 
         self.avgpool = nn.AdaptiveAvgPool3d((1, 1, 1))
-        self.fc = nn.Linear(block_inplanes[3] * block.expansion, 1)  # TODO: check if needs to be modified
+        self.fc = nn.Linear(block_inplanes[3] * block.expansion, 1)  #TODO: change to 92 to size(feature)
 
         for m in self.modules():
             if isinstance(m, nn.Conv3d):
@@ -207,6 +207,7 @@ class ResNet(nn.Module):
         x = self.avgpool(x)
 
         x = x.view(x.size(0), -1)
+        x_2 = x  #save last layer DL features
         x = self.fc(x)
 
         return x
