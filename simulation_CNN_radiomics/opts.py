@@ -12,41 +12,31 @@ def parse_opts():
                         type=Path,
                         help='Data directory path')
     parser.add_argument('--result_path',
-                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/simulation_CNN_radiomics/output/TEST_29',
+                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/simulation_CNN_radiomics/output/TEST_38',
                         type=Path,
                         help='Result directory path')
     parser.add_argument('--resume_path',
-                        # default=None,
-                        default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/simulation_CNN_radiomics/output/save_150.pth',
+                        default=None,
+                        # default='/gpfs_projects/ran.yan/Project_Bone/DeepBone/simulation_CNN_radiomics/output/TEST_37/save_110.pth',
                         type=Path,
                         help='Save data (.pth) of previous training')
-    parser.add_argument('--is_DL',
-                        action='store_true',
-                        help='If true, deep learning  is performed.')
-    parser.add_argument('--is_RF',
-                        action='store_true',
-                        help='If true, random forest is performed.')
     parser.add_argument('--no_train',
                         action='store_true',
                         help='If true, training is not performed.')
+    parser.add_argument('--train_subset',
+                        default='train',
+                        type=str,
+                        help='Used subset in inference (train | trainVal)')
     parser.add_argument('--no_val',
-                        action='store_false',
+                        action='store_true',
                         help='If true, validation is not performed.')
     parser.add_argument('--inference',
                         action='store_false',
                         help='If true, inference is performed.')
     parser.add_argument('--inference_subset',
-                        default='train',
+                        default='test',
                         type=str,
-                        help='Used subset in inference (train | val | test)')
-    parser.add_argument('--batch_size',
-                        default=6,
-                        type=int,
-                        help='Batch Size')
-    parser.add_argument('--inference_batch_size',
-                        default=50,
-                        type=int,
-                        help='Batch Size for inference. 0 means this is the same as batch_size.')
+                        help='Used subset in inference (train | trainVal | val | test | L1)')
     parser.add_argument('--no_sim',
                         action='store_true',
                         help='If true, image simulation is not performed.')
@@ -62,15 +52,47 @@ def parse_opts():
                         default=(0.156,0.156,0.2),
                         type=tuple,
                         help='Voxel size of the simulated CT.')
+    parser.add_argument('--batch_size',
+                        default=64,
+                        type=int,
+                        help='Batch Size')
+    parser.add_argument('--inference_batch_size',
+                        default = 32,
+                        type=int,
+                        help='Batch Size for inference. 0 means this is the same as batch_size.')
     parser.add_argument('--n_epochs',
-                        default=150,
+                        default=200,
                         type=int,
                         help='Number of total epochs to run')
     parser.add_argument('--learning_rate',
-                        default=0.01,
+                        default=100,
                         type=float,
                         help=('Initial learning rate'
                               '(divided by 10 while training by lr scheduler)'))
+    parser.add_argument('--lr_scheduler',
+                        default='plateau',
+                        type=str,
+                        help='Type of LR scheduler (multistep | plateau)')
+    parser.add_argument('--multistep_gamma',
+                        default=0.3,
+                        type=float,
+                        help='Gamma of LR scheduler. See documentation of MultistepLR.')
+    parser.add_argument('--multistep_milestones',
+                        default= [50, 100, 125, 150],
+                        type=int,
+                        nargs='+',
+                        help='Milestones of LR scheduler. See documentation of MultistepLR.')
+    parser.add_argument('--overwrite_milestones',
+                        action='store_true',
+                        help='If true, overwriting multistep_milestones when resuming training.')
+    parser.add_argument('--plateau_patience',
+                        default=10,
+                        type=int,
+                        help='Patience of LR scheduler. See documentation of ReduceLROnPlateau.')
+    parser.add_argument('--optimizer',
+                        default='adam',
+                        type=str,
+                        help='Optimizer (sgd | adam)')
     parser.add_argument('--momentum',
                         default=0.9,
                         type=float,
@@ -86,32 +108,12 @@ def parse_opts():
     parser.add_argument('--nesterov',
                         action='store_true',
                         help='Nesterov momentum')
-    parser.add_argument('--optimizer',
-                        default='sgd',
-                        type=str,
-                        help='Currently only support SGD')
-    parser.add_argument('--lr_scheduler',
-                        default='multistep',
-                        type=str,
-                        help='Type of LR scheduler (multistep | plateau)')
-    parser.add_argument('--multistep_milestones',
-                        default=[50, 100, 150],
-                        type=int,
-                        nargs='+',
-                        help='Milestones of LR scheduler. See documentation of MultistepLR.')
-    parser.add_argument('--overwrite_milestones',
-                        action='store_true',
-                        help='If true, overwriting multistep_milestones when resuming training.')
-    parser.add_argument('--plateau_patience',
-                        default=10,
-                        type=int,
-                        help='Patience of LR scheduler. See documentation of ReduceLROnPlateau.')
     parser.add_argument('--checkpoint',
                         default=10,
                         type=int,
                         help='Trained model is saved at every this epochs.')
     parser.add_argument('--no_cuda',
-                        action='store_false',
+                        action='store_true',
                         help='If true, cuda is not used.')
     parser.add_argument('--n_threads',
                         default=4,
@@ -128,7 +130,7 @@ def parse_opts():
     parser.add_argument('--model_depth',
                         default=18,
                         type=int,
-                        help='Depth of resnet (10 | 18 | 34 | 50 | 101)')
+                        help='Depth of resnet (10 | 18 | 34 | 50 | 101 | 152 | 200)')
     parser.add_argument('--resnet_shortcut',
                         default='B',
                         type=str,
@@ -163,14 +165,6 @@ def parse_opts():
     parser.add_argument('--tensorboard',
                         action='store_false',
                         help='If true, output tensorboard log file.')
-    # parser.add_argument('--dist_url',
-    #                     default='tcp://127.0.0.1:23456',
-    #                     type=str,
-    #                     help='url used to set up distributed training')
-    # parser.add_argument('--world_size',
-    #                     default=-1,
-    #                     type=int,
-    #                     help='number of nodes for distributed training')
     args = parser.parse_args()
 
     return args

@@ -4,6 +4,8 @@ import nrrd
 import pandas as pd
 import numpy as np
 from os import listdir
+from clinicalCT_simulation import simulateImage
+from compute_direction import compute_structure_dir
 
 from data import get_training_data, get_validation_data
 from torch.utils.data import DataLoader
@@ -13,6 +15,7 @@ import nibabel as nib
 from monai.data import DataLoader, Dataset
 from monai.visualize import matshow3d
 import os
+from monai.transforms import AddChannel, ScaleIntensity, RandRotate90, EnsureType, Compose, Resize
 
 
 
@@ -91,9 +94,33 @@ def summarize_MIL():
     mil_all.to_csv('/gpfs_projects/ran.yan/Project_Bone/DeepBone/data/MIL_L1.csv')  # save the dataframe as a csv file
 
 
-def main():
-    summarize_MIL()
+def test_rotate():
+    roi, header = nrrd.read('/gpfs_projects/ran.yan/Project_Bone/DeepBone/data/Segmentations_Otsu/all/Segmentation-grayscale-1_53-1159.nrrd')
 
+    roi= simulateImage(roi, 1, 1, (0.156,0.156,0.2), 100)
+    # input_transform = Compose([ScaleIntensity(),RandRotate90(prob = 1)])
+    input_transform = Compose([ScaleIntensity()])
+    roi = input_transform(roi)
+    structure_dir_features = compute_structure_dir(roi)
+    print(structure_dir_features)
+
+
+def summarize_BoneJ():
+    img_strengths = pd.read_csv('/gpfs_projects/ran.yan/Project_Bone/DeepBone/data/FEA_linear_partial_driver.csv')
+    boneJ_dir = '/gpfs_projects/ran.yan/Project_Bone/DeepBone/data/BoneJ_Results'
+    for i in range(len(img_strengths)):
+        boneJ_filename = img_strengths.iloc[i, 1].replace("Segmentation-grayscale", "ROI")+"-results_table.csv"
+        boneJ = pd.read_csv(os.path.join(boneJ_dir, boneJ_filename))
+        boneJ = boneJ.rename(columns={"img.nrrd": img_strengths.iloc[i, 1]})
+        if i == 0:
+            boneJ_all = boneJ.drop(columns=['Unnamed: 0', 'Unnamed: 2']).T
+        else:
+            boneJ_all = pd.concat([boneJ_all, boneJ.drop(columns=['rowname','Unnamed: 0','Unnamed: 2']).T])
+    boneJ_all.to_csv('/gpfs_projects/ran.yan/Project_Bone/DeepBone/data/BoneJ.csv')  # save the dataframe as a csv file
+
+
+def main():
+    summarize_BoneJ()
 
 if __name__ == "__main__":
     main()

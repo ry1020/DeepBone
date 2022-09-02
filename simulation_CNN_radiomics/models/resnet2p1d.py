@@ -194,7 +194,8 @@ class ResNet(nn.Module):
                                        stride=2)
 
         self.avgpool = nn.AdaptiveAvgPool3d((1, 1, 1))
-        self.fc = nn.Linear(block_inplanes[3] * block.expansion, 1)
+        self.fc1 = nn.Linear(block_inplanes[3] * block.expansion, 1)
+        # self.fc2 = nn.Linear(128, 1)
 
         for m in self.modules():
             if isinstance(m, nn.Conv3d):
@@ -260,8 +261,9 @@ class ResNet(nn.Module):
 
         x = x.view(x.size(0), -1)
 
+        x = self.fc1(x)
         x_2 = x  #save last layer DL features
-        x = self.fc(x)
+        # x = self.fc2(x)
 
         return x
 

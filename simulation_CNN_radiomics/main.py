@@ -5,7 +5,7 @@ import json
 import random
 import numpy as np
 import torch
-from torch.optim import SGD, lr_scheduler
+from torch.optim import SGD, lr_scheduler, Adam
 from torch.backends import cudnn
 from torch.nn import MSELoss
 from torch.utils.data import DataLoader
@@ -66,7 +66,7 @@ def resume_train_utils(resume_path, optimizer, scheduler):
 
 def get_train_utils(opt, model_parameters):
     train_data = get_training_data(opt.data_path, opt.no_sim, opt.noise_scales, opt.resolution_scales, 
-                                    opt.voxel_size_simulated)
+                                    opt.voxel_size_simulated, opt.train_subset)
 
     train_loader = DataLoader(dataset=train_data,
                               num_workers=opt.n_threads,
@@ -79,21 +79,28 @@ def get_train_utils(opt, model_parameters):
         dampening = 0
     else:
         dampening = opt.dampening
-    optimizer = SGD(model_parameters,
-                    lr=opt.learning_rate,
-                    momentum=opt.momentum,
-                    dampening=dampening,
-                    weight_decay=opt.weight_decay,
-                    nesterov=opt.nesterov)
+    if opt.optimizer == 'sgd':
+        optimizer = SGD(model_parameters,
+                        lr=opt.learning_rate,
+                        momentum=opt.momentum,
+                        dampening=dampening,
+                        weight_decay=opt.weight_decay,
+                        nesterov=opt.nesterov)
+    elif opt.optimizer == 'adam':
+        optimizer = Adam(model_parameters,
+                        lr=opt.learning_rate)
 
     assert opt.lr_scheduler in ['plateau', 'multistep']
     assert not (opt.lr_scheduler == 'plateau' and opt.no_val)
     if opt.lr_scheduler == 'plateau':
-        scheduler = lr_scheduler.ReduceLROnPlateau(
-            optimizer, 'min', patience=opt.plateau_patience)
-    else:
+        scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, 
+                                                    'min', 
+                                                    patience=opt.plateau_patience)
+    elif opt.lr_scheduler == 'multistep':
         scheduler = lr_scheduler.MultiStepLR(optimizer,
-                                             opt.multistep_milestones)
+                                             milestones = opt.multistep_milestones,
+                                             gamma = opt.multistep_gamma)
+
 
     if opt.is_master_node:
         train_logger = Logger(opt.result_path / 'train.log',
@@ -232,6 +239,7 @@ if __name__ == '__main__':
 
     opt = get_opt()
 
+    
     opt.device = torch.device('cpu' if opt.no_cuda else 'cuda')
     if not opt.no_cuda:
         cudnn.benchmark = True

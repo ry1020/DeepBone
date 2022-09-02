@@ -6,7 +6,7 @@ import math
 
 def angle_between_vectors(v1, v2 = np.array([0,0,1])):
 
-    radian = np.arccos(np.absolute(np.dot(v1,v2)) / (norm(v1)*norm(v2)) )  #Compute only angles smaller than 180 degrees
+    radian = np.arccos(np.absolute(np.dot(v1,v2)) / (norm(v1)*norm(v2)) )  #Compute only angles smaller than 90 degrees
     angle = radian/math.pi*180
 
     return angle
@@ -47,10 +47,10 @@ def compute_structure_dir_parallel(volumeList, numWorkers=None):
 
 
 def compute_mil_dir(img_strengths, idx):
-    min_dir_eigenvector = img_strengths.iloc[idx, 8:11].to_numpy()
-    inter_dir_eigenvector = img_strengths.iloc[idx, 11:14].to_numpy()
-    main_dir_eigenvector = img_strengths.iloc[idx, 14:17].to_numpy()
-    mil_eigenvalues = img_strengths.iloc[idx, 17:20].to_numpy()
+    min_dir_eigenvector = img_strengths['m00','m01','m02'].iloc[idx, :].to_numpy()
+    inter_dir_eigenvector = img_strengths['m10','m11','m12'].iloc[idx, :].to_numpy()
+    main_dir_eigenvector = img_strengths['m20','m21','m22'].iloc[idx, :].to_numpy()
+    mil_eigenvalues = img_strengths['D1','D2','D3'].iloc[idx, :].to_numpy()
     min_angle = angle_between_vectors(min_dir_eigenvector)
     inter_angle = angle_between_vectors(inter_dir_eigenvector)
     main_angle = angle_between_vectors(main_dir_eigenvector)

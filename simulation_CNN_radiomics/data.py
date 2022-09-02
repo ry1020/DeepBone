@@ -6,7 +6,7 @@ from dataset import DatasetFromFolder
 
 
 def get_roi_dir(data_path):
-    output_roi_dir = os.path.join(data_path, "Segmentations_Otsu", "all")
+    output_roi_dir = os.path.join(data_path, "Segmentations_Otsu_All")
     return output_roi_dir
 
 
@@ -37,9 +37,9 @@ def target_transform():
     return EnsureType()
 
 
-def get_training_data(data_path, no_sim, noise_scales, resolution_scales, voxel_size_simulated):
+def get_training_data(data_path, no_sim, noise_scales, resolution_scales, voxel_size_simulated, train_subset):
     roi_dir = get_roi_dir(data_path)
-    train_strength_file = get_strength_file(data_path).replace(".csv", "_train.csv")
+    train_strength_file = get_strength_file(data_path).replace(".csv", ''.join(['_',train_subset,'.csv']))
 
     return DatasetFromFolder(roi_dir,
                              train_strength_file,
@@ -68,7 +68,6 @@ def get_validation_data(data_path, no_sim, noise_scales, resolution_scales, voxe
 
 
 def get_inference_data(data_path, no_sim, noise_scales, resolution_scales, voxel_size_simulated, seed, inference_subset):
-    assert inference_subset in ['train', 'val', 'test']
     roi_dir = get_roi_dir(data_path)
     inference_strength_file = get_strength_file(data_path).replace(".csv", ''.join(['_',inference_subset,'.csv']))
 

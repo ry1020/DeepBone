@@ -30,17 +30,17 @@ class DatasetFromFolder(data.Dataset):
         roi_path = os.path.join(self.roi_dir, self.img_strengths.iloc[idx, 1])
         roi, header = nrrd.read(''.join((roi_path,'.nrrd')))
 
-        #array_1 = roi[:,:,np.shape(roi)[2]//2]
+        # array_1 = roi[:,:,np.shape(roi)[2]//2]
 
         if not self.no_sim:
             roi= simulateImage(roi, self.noise_scales, self.resolution_scales, self.voxel_size_simulated, self.seed)
 
-        #array_2 = roi[:,:,np.shape(roi)[2]//2]
+        # array_2 = roi[:,:,np.shape(roi)[2]//2]
 
         if self.input_transform:
             roi = self.input_transform(roi)
 
-        #array_3 = squeeze(roi[:,:,:,roi.size(dim=3)//2]).numpy()
+        # array_3 = squeeze(roi[:,:,:,roi.size(dim=3)//2]).numpy()
 
         strength = self.img_strengths.iloc[idx, 2]
 

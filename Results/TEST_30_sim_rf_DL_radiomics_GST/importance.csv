@@ -1,0 +1,608 @@
+,importances,feature_name
+237,0.114100496,deep_feature 143
+161,0.105726916,deep_feature 67
+315,0.09233066,deep_feature 221
+555,0.070104912,deep_feature 461
+198,0.054450585,deep_feature 104
+242,0.052326508,deep_feature 148
+605,0.043518374,deep_feature 511
+353,0.039872343,deep_feature 259
+147,0.032818607,deep_feature 53
+418,0.031023911,deep_feature 324
+366,0.029273104,deep_feature 272
+437,0.02841,deep_feature 343
+304,0.026263197,deep_feature 210
+317,0.024482788,deep_feature 223
+160,0.017980442,deep_feature 66
+458,0.014986612,deep_feature 364
+194,0.014412897,deep_feature 100
+129,0.014298301,deep_feature 35
+461,0.012574058,deep_feature 367
+271,0.011920154,deep_feature 177
+364,0.010637743,deep_feature 270
+375,0.00970113,deep_feature 281
+528,0.008229102,deep_feature 434
+127,0.007314416,deep_feature 33
+498,0.007055841,deep_feature 404
+347,0.007014182,deep_feature 253
+297,0.006960343,deep_feature 203
+516,0.006433797,deep_feature 422
+216,0.005210418,deep_feature 122
+322,0.005095333,deep_feature 228
+533,0.004507328,deep_feature 439
+543,0.003403741,deep_feature 449
+185,0.003204987,deep_feature 91
+529,0.002951534,deep_feature 435
+576,0.002864758,deep_feature 482
+267,0.002808549,deep_feature 173
+393,0.002805816,deep_feature 299
+569,0.002686453,deep_feature 475
+429,0.002439004,deep_feature 335
+425,0.002410377,deep_feature 331
+289,0.002324585,deep_feature 195
+583,0.002182803,deep_feature 489
+562,0.00199439,deep_feature 468
+255,0.001822449,deep_feature 161
+423,0.00177608,deep_feature 329
+189,0.001774117,deep_feature 95
+497,0.001721594,deep_feature 403
+295,0.001629495,deep_feature 201
+211,0.001608725,deep_feature 117
+247,0.00156135,deep_feature 153
+457,0.001538883,deep_feature 363
+443,0.001433917,deep_feature 349
+296,0.001354733,deep_feature 202
+469,0.00134888,deep_feature 375
+561,0.001279922,deep_feature 467
+434,0.001265271,deep_feature 340
+379,0.001117085,deep_feature 285
+548,0.001089042,deep_feature 454
+152,0.001073184,deep_feature 58
+310,0.00104472,deep_feature 216
+332,0.000963303,deep_feature 238
+552,0.000903819,deep_feature 458
+514,0.000893702,deep_feature 420
+546,0.000804865,deep_feature 452
+151,0.00078001,deep_feature 57
+522,0.000761418,deep_feature 428
+594,0.000741648,deep_feature 500
+176,0.000658423,deep_feature 82
+148,0.00064451,deep_feature 54
+282,0.000622546,deep_feature 188
+324,0.000588465,deep_feature 230
+121,0.000579528,deep_feature 27
+272,0.000572123,deep_feature 178
+180,0.000534796,deep_feature 86
+600,0.000513432,deep_feature 506
+95,0.000488009,deep_feature 1
+330,0.000441686,deep_feature 236
+382,0.000440468,deep_feature 288
+188,0.000425672,deep_feature 94
+240,0.000422041,deep_feature 146
+511,0.000416885,deep_feature 417
+172,0.000392473,deep_feature 78
+326,0.000388905,deep_feature 232
+365,0.000367391,deep_feature 271
+197,0.000358166,deep_feature 103
+451,0.000347467,deep_feature 357
+112,0.000340133,deep_feature 18
+300,0.000334273,deep_feature 206
+479,0.000334026,deep_feature 385
+452,0.00033301,deep_feature 358
+554,0.000319274,deep_feature 460
+306,0.000297317,deep_feature 212
+137,0.000291431,deep_feature 43
+526,0.000290976,deep_feature 432
+598,0.000282613,deep_feature 504
+374,0.000281431,deep_feature 280
+214,0.000273944,deep_feature 120
+235,0.000265721,deep_feature 141
+482,0.000263721,deep_feature 388
+468,0.000253408,deep_feature 374
+395,0.000251721,deep_feature 301
+319,0.000241773,deep_feature 225
+199,0.000238811,deep_feature 105
+588,0.000236262,deep_feature 494
+108,0.000234876,deep_feature 14
+117,0.000231233,deep_feature 23
+291,0.000224528,deep_feature 197
+11,0.000223761,original_firstorder_Kurtosis
+190,0.000222134,deep_feature 96
+41,0.000209883,original_glcm_MaximumProbability
+414,0.000208132,deep_feature 320
+572,0.000195882,deep_feature 478
+342,0.000194162,deep_feature 248
+278,0.000194098,deep_feature 184
+171,0.000193716,deep_feature 77
+196,0.000186225,deep_feature 102
+258,0.000176123,deep_feature 164
+274,0.000174215,deep_feature 180
+582,0.000169532,deep_feature 488
+158,0.000167066,deep_feature 64
+398,0.000163982,deep_feature 304
+369,0.000161515,deep_feature 275
+329,0.000161243,deep_feature 235
+579,0.000159257,deep_feature 485
+485,0.000156176,deep_feature 391
+492,0.00015037,deep_feature 398
+202,0.000147397,deep_feature 108
+145,0.000141515,deep_feature 51
+298,0.000140798,deep_feature 204
+401,0.000136502,deep_feature 307
+118,0.000135249,deep_feature 24
+450,0.000130452,deep_feature 356
+119,0.00012875,deep_feature 25
+509,0.000128539,deep_feature 415
+524,0.000127598,deep_feature 430
+436,0.000125538,deep_feature 342
+169,0.000124858,deep_feature 75
+575,0.000122357,deep_feature 481
+200,0.000120776,deep_feature 106
+181,0.000115806,deep_feature 87
+226,0.000112013,deep_feature 132
+346,0.000111259,deep_feature 252
+113,0.00010876,deep_feature 19
+345,0.000108065,deep_feature 251
+227,0.000105847,deep_feature 133
+444,0.000105826,deep_feature 350
+236,0.000104534,deep_feature 142
+99,0.000102026,deep_feature 5
+372,0.000101955,deep_feature 278
+195,9.68E-05,deep_feature 101
+284,9.12E-05,deep_feature 190
+404,9.07E-05,deep_feature 310
+165,8.45E-05,deep_feature 71
+495,8.35E-05,deep_feature 401
+106,8.30E-05,deep_feature 12
+266,8.16E-05,deep_feature 172
+460,8.06E-05,deep_feature 366
+221,7.91E-05,deep_feature 127
+120,7.72E-05,deep_feature 26
+136,7.69E-05,deep_feature 42
+416,7.36E-05,deep_feature 322
+558,7.34E-05,deep_feature 464
+536,7.14E-05,deep_feature 442
+204,7.13E-05,deep_feature 110
+453,7.11E-05,deep_feature 359
+473,7.09E-05,deep_feature 379
+496,7.07E-05,deep_feature 402
+367,6.92E-05,deep_feature 273
+340,6.90E-05,deep_feature 246
+177,6.77E-05,deep_feature 83
+493,6.77E-05,deep_feature 399
+348,6.70E-05,deep_feature 254
+156,6.33E-05,deep_feature 62
+494,6.30E-05,deep_feature 400
+273,6.15E-05,deep_feature 179
+394,5.85E-05,deep_feature 300
+238,5.84E-05,deep_feature 144
+408,5.84E-05,deep_feature 314
+475,5.83E-05,deep_feature 381
+432,5.52E-05,deep_feature 338
+587,5.32E-05,deep_feature 493
+515,5.31E-05,deep_feature 421
+606,5.30E-05,deep_feature 512
+123,5.29E-05,deep_feature 29
+280,5.29E-05,deep_feature 186
+261,5.23E-05,deep_feature 167
+4,5.19E-05,inter eigenvalues_gst
+146,5.01E-05,deep_feature 52
+224,4.87E-05,deep_feature 130
+275,4.80E-05,deep_feature 181
+595,4.56E-05,deep_feature 501
+257,4.52E-05,deep_feature 163
+277,4.51E-05,deep_feature 183
+508,4.50E-05,deep_feature 414
+449,4.41E-05,deep_feature 355
+386,4.31E-05,deep_feature 292
+279,4.28E-05,deep_feature 185
+491,4.15E-05,deep_feature 397
+184,4.12E-05,deep_feature 90
+380,4.12E-05,deep_feature 286
+248,4.04E-05,deep_feature 154
+116,3.94E-05,deep_feature 22
+519,3.93E-05,deep_feature 425
+157,3.88E-05,deep_feature 63
+474,3.88E-05,deep_feature 380
+303,3.87E-05,deep_feature 209
+483,3.83E-05,deep_feature 389
+336,3.72E-05,deep_feature 242
+371,3.60E-05,deep_feature 277
+412,3.58E-05,deep_feature 318
+589,3.56E-05,deep_feature 495
+260,3.55E-05,deep_feature 166
+307,3.55E-05,deep_feature 213
+213,3.51E-05,deep_feature 119
+328,3.48E-05,deep_feature 234
+489,3.46E-05,deep_feature 395
+438,3.30E-05,deep_feature 344
+484,3.21E-05,deep_feature 390
+413,3.14E-05,deep_feature 319
+103,3.10E-05,deep_feature 9
+377,3.07E-05,deep_feature 283
+167,3.03E-05,deep_feature 73
+456,2.98E-05,deep_feature 362
+541,2.98E-05,deep_feature 447
+593,2.97E-05,deep_feature 499
+525,2.94E-05,deep_feature 431
+422,2.92E-05,deep_feature 328
+85,2.87E-05,original_gldm_LargeDependenceLowGrayLevelEmphasis
+360,2.79E-05,deep_feature 266
+368,2.77E-05,deep_feature 274
+531,2.73E-05,deep_feature 437
+309,2.71E-05,deep_feature 215
+217,2.69E-05,deep_feature 123
+203,2.67E-05,deep_feature 109
+597,2.65E-05,deep_feature 503
+486,2.63E-05,deep_feature 392
+400,2.60E-05,deep_feature 306
+476,2.55E-05,deep_feature 382
+249,2.53E-05,deep_feature 155
+243,2.51E-05,deep_feature 149
+584,2.49E-05,deep_feature 490
+480,2.45E-05,deep_feature 386
+445,2.43E-05,deep_feature 351
+259,2.40E-05,deep_feature 165
+341,2.39E-05,deep_feature 247
+170,2.37E-05,deep_feature 76
+327,2.35E-05,deep_feature 233
+428,2.35E-05,deep_feature 334
+252,2.34E-05,deep_feature 158
+407,2.33E-05,deep_feature 313
+539,2.33E-05,deep_feature 445
+164,2.32E-05,deep_feature 70
+518,2.31E-05,deep_feature 424
+256,2.30E-05,deep_feature 162
+21,2.29E-05,original_glcm_Autocorrelation
+61,2.29E-05,original_glszm_GrayLevelNonUniformityNormalized
+166,2.29E-05,deep_feature 72
+212,2.27E-05,deep_feature 118
+232,2.27E-05,deep_feature 138
+520,2.18E-05,deep_feature 426
+178,2.17E-05,deep_feature 84
+253,2.16E-05,deep_feature 159
+599,2.14E-05,deep_feature 505
+501,2.13E-05,deep_feature 407
+187,2.06E-05,deep_feature 93
+251,2.06E-05,deep_feature 157
+427,2.06E-05,deep_feature 333
+378,2.04E-05,deep_feature 284
+135,2.03E-05,deep_feature 41
+223,2.02E-05,deep_feature 129
+406,2.02E-05,deep_feature 312
+22,2.00E-05,original_glcm_ClusterProminence
+397,2.00E-05,deep_feature 303
+265,1.97E-05,deep_feature 171
+490,1.97E-05,deep_feature 396
+320,1.96E-05,deep_feature 226
+571,1.96E-05,deep_feature 477
+246,1.95E-05,deep_feature 152
+149,1.94E-05,deep_feature 55
+124,1.92E-05,deep_feature 30
+503,1.91E-05,deep_feature 409
+411,1.90E-05,deep_feature 317
+355,1.87E-05,deep_feature 261
+442,1.81E-05,deep_feature 348
+550,1.81E-05,deep_feature 456
+268,1.78E-05,deep_feature 174
+530,1.77E-05,deep_feature 436
+351,1.75E-05,deep_feature 257
+287,1.74E-05,deep_feature 193
+553,1.73E-05,deep_feature 459
+220,1.72E-05,deep_feature 126
+544,1.72E-05,deep_feature 450
+230,1.71E-05,deep_feature 136
+477,1.71E-05,deep_feature 383
+513,1.71E-05,deep_feature 419
+153,1.69E-05,deep_feature 59
+350,1.69E-05,deep_feature 256
+540,1.69E-05,deep_feature 446
+241,1.68E-05,deep_feature 147
+130,1.67E-05,deep_feature 36
+222,1.67E-05,deep_feature 128
+142,1.64E-05,deep_feature 48
+229,1.63E-05,deep_feature 135
+302,1.62E-05,deep_feature 208
+523,1.59E-05,deep_feature 429
+174,1.58E-05,deep_feature 80
+92,1.55E-05,original_ngtdm_Complexity
+463,1.55E-05,deep_feature 369
+385,1.54E-05,deep_feature 291
+604,1.53E-05,deep_feature 510
+215,1.52E-05,deep_feature 121
+381,1.51E-05,deep_feature 287
+111,1.48E-05,deep_feature 17
+389,1.47E-05,deep_feature 295
+358,1.46E-05,deep_feature 264
+321,1.45E-05,deep_feature 227
+276,1.44E-05,deep_feature 182
+29,1.42E-05,original_glcm_DifferenceVariance
+32,1.41E-05,original_glcm_Idmn
+286,1.39E-05,deep_feature 192
+356,1.39E-05,deep_feature 262
+285,1.38E-05,deep_feature 191
+193,1.37E-05,deep_feature 99
+405,1.37E-05,deep_feature 311
+580,1.36E-05,deep_feature 486
+101,1.33E-05,deep_feature 7
+424,1.33E-05,deep_feature 330
+532,1.33E-05,deep_feature 438
+293,1.31E-05,deep_feature 199
+313,1.30E-05,deep_feature 219
+433,1.29E-05,deep_feature 339
+205,1.26E-05,deep_feature 111
+150,1.25E-05,deep_feature 56
+538,1.24E-05,deep_feature 444
+344,1.23E-05,deep_feature 250
+603,1.23E-05,deep_feature 509
+143,1.22E-05,deep_feature 49
+162,1.22E-05,deep_feature 68
+392,1.20E-05,deep_feature 298
+542,1.19E-05,deep_feature 448
+499,1.17E-05,deep_feature 405
+175,1.16E-05,deep_feature 81
+90,1.13E-05,original_ngtdm_Busyness
+69,1.12E-05,original_glszm_SizeZoneNonUniformityNormalized
+549,1.12E-05,deep_feature 455
+559,1.11E-05,deep_feature 465
+58,1.09E-05,original_glrlm_ShortRunHighGrayLevelEmphasis
+225,1.09E-05,deep_feature 131
+245,1.09E-05,deep_feature 151
+521,1.09E-05,deep_feature 427
+601,1.09E-05,deep_feature 507
+472,1.08E-05,deep_feature 378
+290,1.06E-05,deep_feature 196
+545,1.06E-05,deep_feature 451
+262,1.04E-05,deep_feature 168
+466,1.02E-05,deep_feature 372
+481,1.02E-05,deep_feature 387
+133,1.00E-05,deep_feature 39
+560,9.92E-06,deep_feature 466
+316,9.78E-06,deep_feature 222
+510,9.71E-06,deep_feature 416
+387,9.66E-06,deep_feature 293
+419,9.59E-06,deep_feature 325
+574,9.52E-06,deep_feature 480
+455,9.45E-06,deep_feature 361
+512,9.30E-06,deep_feature 418
+343,9.20E-06,deep_feature 249
+439,9.16E-06,deep_feature 345
+567,9.16E-06,deep_feature 473
+104,9.11E-06,deep_feature 10
+206,8.88E-06,deep_feature 112
+357,8.79E-06,deep_feature 263
+467,8.73E-06,deep_feature 373
+182,8.68E-06,deep_feature 88
+139,8.64E-06,deep_feature 45
+81,8.51E-06,original_gldm_GrayLevelVariance
+89,8.48E-06,original_gldm_SmallDependenceLowGrayLevelEmphasis
+431,8.43E-06,deep_feature 337
+504,8.42E-06,deep_feature 410
+570,8.34E-06,deep_feature 476
+132,8.28E-06,deep_feature 38
+154,8.23E-06,deep_feature 60
+426,8.10E-06,deep_feature 332
+462,8.08E-06,deep_feature 368
+234,8.04E-06,deep_feature 140
+163,7.98E-06,deep_feature 69
+294,7.92E-06,deep_feature 200
+233,7.86E-06,deep_feature 139
+349,7.77E-06,deep_feature 255
+507,7.55E-06,deep_feature 413
+409,7.53E-06,deep_feature 315
+5,7.46E-06,min eigenvalues_gst
+399,7.44E-06,deep_feature 305
+76,7.41E-06,original_gldm_DependenceEntropy
+547,7.40E-06,deep_feature 453
+505,7.38E-06,deep_feature 411
+435,7.32E-06,deep_feature 341
+7,7.21E-06,original_firstorder_90Percentile
+359,7.05E-06,deep_feature 265
+465,6.99E-06,deep_feature 371
+373,6.91E-06,deep_feature 279
+73,6.90E-06,original_glszm_ZoneEntropy
+1,6.72E-06,inter_angle_gst
+168,6.70E-06,deep_feature 74
+564,6.64E-06,deep_feature 470
+244,6.57E-06,deep_feature 150
+557,6.48E-06,deep_feature 463
+82,6.39E-06,original_gldm_HighGrayLevelEmphasis
+179,6.28E-06,deep_feature 85
+447,6.26E-06,deep_feature 353
+363,6.03E-06,deep_feature 269
+126,6.01E-06,deep_feature 32
+66,6.00E-06,original_glszm_LargeAreaLowGrayLevelEmphasis
+534,5.90E-06,deep_feature 440
+592,5.89E-06,deep_feature 498
+446,5.85E-06,deep_feature 352
+122,5.83E-06,deep_feature 28
+338,5.79E-06,deep_feature 244
+107,5.77E-06,deep_feature 13
+186,5.74E-06,deep_feature 92
+131,5.69E-06,deep_feature 37
+0,5.62E-06,main_angle_gst
+470,5.62E-06,deep_feature 376
+114,5.58E-06,deep_feature 20
+35,5.53E-06,original_glcm_Imc2
+28,5.50E-06,original_glcm_DifferenceEntropy
+430,5.34E-06,deep_feature 336
+75,5.28E-06,original_glszm_ZoneVariance
+292,5.27E-06,deep_feature 198
+128,5.25E-06,deep_feature 34
+138,5.25E-06,deep_feature 44
+46,5.23E-06,original_glrlm_GrayLevelVariance
+283,5.21E-06,deep_feature 189
+218,5.20E-06,deep_feature 124
+578,5.10E-06,deep_feature 484
+263,5.05E-06,deep_feature 169
+318,5.05E-06,deep_feature 224
+602,5.05E-06,deep_feature 508
+210,5.04E-06,deep_feature 116
+459,5.03E-06,deep_feature 365
+354,5.02E-06,deep_feature 260
+403,4.95E-06,deep_feature 309
+586,4.95E-06,deep_feature 492
+155,4.88E-06,deep_feature 61
+417,4.80E-06,deep_feature 323
+506,4.72E-06,deep_feature 412
+454,4.65E-06,deep_feature 360
+335,4.55E-06,deep_feature 241
+141,4.50E-06,deep_feature 47
+402,4.45E-06,deep_feature 308
+105,4.43E-06,deep_feature 11
+308,4.43E-06,deep_feature 214
+239,4.39E-06,deep_feature 145
+144,4.30E-06,deep_feature 50
+325,4.29E-06,deep_feature 231
+471,4.17E-06,deep_feature 377
+448,4.16E-06,deep_feature 354
+388,4.10E-06,deep_feature 294
+390,4.07E-06,deep_feature 296
+71,4.01E-06,original_glszm_SmallAreaHighGrayLevelEmphasis
+415,4.01E-06,deep_feature 321
+537,3.99E-06,deep_feature 443
+323,3.93E-06,deep_feature 229
+488,3.89E-06,deep_feature 394
+391,3.87E-06,deep_feature 297
+208,3.82E-06,deep_feature 114
+191,3.75E-06,deep_feature 97
+43,3.74E-06,original_glcm_SumSquares
+219,3.66E-06,deep_feature 125
+94,3.64E-06,original_ngtdm_Strength
+84,3.55E-06,original_gldm_LargeDependenceHighGrayLevelEmphasis
+207,3.43E-06,deep_feature 113
+301,3.38E-06,deep_feature 207
+33,3.35E-06,original_glcm_Idn
+159,3.26E-06,deep_feature 65
+421,3.25E-06,deep_feature 327
+563,3.24E-06,deep_feature 469
+96,3.22E-06,deep_feature 2
+231,3.10E-06,deep_feature 137
+384,3.00E-06,deep_feature 290
+65,2.98E-06,original_glszm_LargeAreaHighGrayLevelEmphasis
+9,2.93E-06,original_firstorder_Entropy
+228,2.91E-06,deep_feature 134
+281,2.90E-06,deep_feature 187
+10,2.87E-06,original_firstorder_InterquartileRange
+334,2.80E-06,deep_feature 240
+57,2.70E-06,original_glrlm_ShortRunEmphasis
+585,2.70E-06,deep_feature 491
+79,2.64E-06,original_gldm_DependenceVariance
+288,2.62E-06,deep_feature 194
+63,2.58E-06,original_glszm_HighGrayLevelZoneEmphasis
+331,2.58E-06,deep_feature 237
+337,2.55E-06,deep_feature 243
+254,2.46E-06,deep_feature 160
+500,2.43E-06,deep_feature 406
+72,2.38E-06,original_glszm_SmallAreaLowGrayLevelEmphasis
+38,2.37E-06,original_glcm_JointEnergy
+18,2.28E-06,original_firstorder_TotalEnergy
+140,2.28E-06,deep_feature 46
+517,2.25E-06,deep_feature 423
+17,2.21E-06,original_firstorder_Skewness
+269,2.12E-06,deep_feature 175
+102,2.09E-06,deep_feature 8
+299,2.07E-06,deep_feature 205
+54,2.05E-06,original_glrlm_RunLengthNonUniformityNormalized
+591,2.01E-06,deep_feature 497
+125,1.99E-06,deep_feature 31
+109,1.93E-06,deep_feature 15
+478,1.92E-06,deep_feature 384
+67,1.91E-06,original_glszm_LowGrayLevelZoneEmphasis
+464,1.79E-06,deep_feature 370
+370,1.78E-06,deep_feature 276
+20,1.77E-06,original_firstorder_Variance
+339,1.74E-06,deep_feature 245
+97,1.71E-06,deep_feature 3
+39,1.70E-06,original_glcm_JointEntropy
+535,1.60E-06,deep_feature 441
+527,1.56E-06,deep_feature 433
+70,1.54E-06,original_glszm_SmallAreaEmphasis
+26,1.52E-06,original_glcm_Correlation
+596,1.52E-06,deep_feature 502
+420,1.45E-06,deep_feature 326
+134,1.41E-06,deep_feature 40
+42,1.38E-06,original_glcm_SumEntropy
+60,1.38E-06,original_glszm_GrayLevelNonUniformity
+2,1.37E-06,min_angle_gst
+311,1.35E-06,deep_feature 217
+23,1.31E-06,original_glcm_ClusterShade
+25,1.27E-06,original_glcm_Contrast
+34,1.24E-06,original_glcm_Imc1
+51,1.22E-06,original_glrlm_LowGrayLevelRunEmphasis
+440,1.18E-06,deep_feature 346
+100,1.17E-06,deep_feature 6
+209,1.15E-06,deep_feature 115
+361,1.06E-06,deep_feature 267
+383,1.06E-06,deep_feature 289
+183,1.00E-06,deep_feature 89
+270,9.30E-07,deep_feature 176
+577,9.27E-07,deep_feature 483
+556,8.61E-07,deep_feature 462
+573,7.98E-07,deep_feature 479
+565,7.85E-07,deep_feature 471
+441,7.43E-07,deep_feature 347
+62,6.98E-07,original_glszm_GrayLevelVariance
+581,6.78E-07,deep_feature 487
+487,6.10E-07,deep_feature 393
+86,6.03E-07,original_gldm_LowGrayLevelEmphasis
+352,6.02E-07,deep_feature 258
+55,5.73E-07,original_glrlm_RunPercentage
+3,5.34E-07,main_eigenvalues_gst
+110,4.83E-07,deep_feature 16
+333,4.62E-07,deep_feature 239
+59,4.50E-07,original_glrlm_ShortRunLowGrayLevelEmphasis
+115,4.18E-07,deep_feature 21
+83,3.98E-07,original_gldm_LargeDependenceEmphasis
+376,3.91E-07,deep_feature 282
+551,3.65E-07,deep_feature 457
+13,3.55E-07,original_firstorder_Mean
+64,3.35E-07,original_glszm_LargeAreaEmphasis
+98,3.09E-07,deep_feature 4
+48,1.81E-07,original_glrlm_LongRunEmphasis
+312,7.85E-08,deep_feature 218
+15,5.11E-08,original_firstorder_RobustMeanAbsoluteDeviation
+6,0,original_firstorder_10Percentile
+8,0,original_firstorder_Energy
+12,0,original_firstorder_MeanAbsoluteDeviation
+14,0,original_firstorder_Median
+16,0,original_firstorder_RootMeanSquared
+19,0,original_firstorder_Uniformity
+24,0,original_glcm_ClusterTendency
+27,0,original_glcm_DifferenceAverage
+30,0,original_glcm_Id
+31,0,original_glcm_Idm
+36,0,original_glcm_InverseVariance
+37,0,original_glcm_JointAverage
+40,0,original_glcm_MCC
+44,0,original_glrlm_GrayLevelNonUniformity
+45,0,original_glrlm_GrayLevelNonUniformityNormalized
+47,0,original_glrlm_HighGrayLevelRunEmphasis
+49,0,original_glrlm_LongRunHighGrayLevelEmphasis
+50,0,original_glrlm_LongRunLowGrayLevelEmphasis
+52,0,original_glrlm_RunEntropy
+53,0,original_glrlm_RunLengthNonUniformity
+56,0,original_glrlm_RunVariance
+68,0,original_glszm_SizeZoneNonUniformity
+74,0,original_glszm_ZonePercentage
+77,0,original_gldm_DependenceNonUniformity
+78,0,original_gldm_DependenceNonUniformityNormalized
+80,0,original_gldm_GrayLevelNonUniformity
+87,0,original_gldm_SmallDependenceEmphasis
+88,0,original_gldm_SmallDependenceHighGrayLevelEmphasis
+91,0,original_ngtdm_Coarseness
+93,0,original_ngtdm_Contrast
+173,0,deep_feature 79
+192,0,deep_feature 98
+201,0,deep_feature 107
+250,0,deep_feature 156
+264,0,deep_feature 170
+305,0,deep_feature 211
+314,0,deep_feature 220
+362,0,deep_feature 268
+396,0,deep_feature 302
+410,0,deep_feature 316
+502,0,deep_feature 408
+566,0,deep_feature 472
+568,0,deep_feature 474
+590,0,deep_feature 496
